@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私人助手 - 番茄钟</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍅 番茄钟</h1>
+            <p class="subtitle">专注工作，高效休息</p>
+        </div>
+
+        <div class="timer-container">
+            <div class="timer-display" id="timerDisplay">
+                <span class="minutes" id="minutes">25</span>
+                <span class="separator">:</span>
+                <span class="seconds" id="seconds">00</span>
+            </div>
+
+            <div class="progress-ring">
+                <svg class="progress-svg" width="200" height="200">
+                    <circle class="progress-bg" cx="100" cy="100" r="90"></circle>
+                    <circle class="progress-bar" id="progressBar" cx="100" cy="100" r="90"></circle>
+                </svg>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="startBtn">
+                <span class="btn-icon">▶</span>
+                <span class="btn-text">开始</span>
+            </button>
+            <button class="btn btn-secondary" id="pauseBtn" disabled>
+                <span class="btn-icon">⏸</span>
+                <span class="btn-text">暂停</span>
+            </button>
+            <button class="btn btn-danger" id="resetBtn">
+                <span class="btn-icon">⏹</span>
+                <span class="btn-text">重置</span>
+            </button>
+        </div>
+
+        <div class="presets">
+            <h3>快速设置</h3>
+            <div class="preset-buttons">
+                <button class="preset-btn" data-minutes="25">25分钟</button>
+                <button class="preset-btn" data-minutes="15">15分钟</button>
+                <button class="preset-btn" data-minutes="5">5分钟</button>
+                <button class="preset-btn" data-minutes="10">10分钟</button>
+            </div>
+        </div>
+
+        <div class="status" id="status">
+            <span class="status-text">准备就绪</span>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
