@@ -22,9 +22,32 @@
 - Rust (最新稳定版)
 - Node.js (用于 Tauri CLI)
 - 系统依赖：
-  - Linux: `webkit2gtk`, `libappindicator3`, `librsvg2-dev`
-  - macOS: Xcode Command Line Tools
-  - Windows: Microsoft Visual Studio C++ Build Tools
+  - **Linux**: `webkit2gtk`, `libappindicator3`, `librsvg2-dev`
+  - **macOS**: Xcode Command Line Tools
+  - **Windows**: Microsoft Visual Studio C++ Build Tools 或 Visual Studio 2019/2022（包含 C++ 工作负载）
+
+### Windows 详细安装步骤
+
+1. **安装 Rust**
+   - 访问 https://www.rust-lang.org/tools/install
+   - 下载并运行 `rustup-init.exe`
+   - 按照提示完成安装
+
+2. **安装 Visual Studio Build Tools**
+   - 下载 Visual Studio Build Tools: https://visualstudio.microsoft.com/downloads/
+   - 选择 "C++ build tools" 工作负载
+   - 或者安装完整的 Visual Studio（任何版本，包含 C++ 开发工具）
+
+3. **安装 Node.js**
+   - 访问 https://nodejs.org/
+   - 下载并安装 LTS 版本
+
+4. **安装 Tauri CLI**
+   ```powershell
+   cargo install tauri-cli
+   # 或
+   npm install -g @tauri-apps/cli
+   ```
 
 ## 安装与运行
 
@@ -47,21 +70,42 @@ npm install
 
 ### 3. 开发模式运行
 
+**Linux/macOS:**
 ```bash
 npm run dev
 # 或
-cargo tauri dev
+cd src-tauri && cargo tauri dev
 ```
+
+**Windows (PowerShell):**
+```powershell
+npm run dev
+# 或
+cd src-tauri; cargo tauri dev
+```
+
+也可以直接运行 `run.sh` (Linux/macOS) 或 `run.bat` (Windows)
 
 ### 4. 构建生产版本
 
+**Linux/macOS:**
 ```bash
 npm run build
 # 或
-cargo tauri build
+cd src-tauri && cargo tauri build
 ```
 
-构建产物位于 `src-tauri/target/release/` 目录。
+**Windows (PowerShell):**
+```powershell
+npm run build
+# 或
+cd src-tauri; cargo tauri build
+```
+
+构建产物位于 `src-tauri/target/release/` 目录：
+- **Windows**: `src-tauri/target/release/assistant.exe` 或安装包在 `src-tauri/target/release/bundle/msi/`
+- **Linux**: `src-tauri/target/release/assistant` 或 AppImage/DEB 包
+- **macOS**: `src-tauri/target/release/assistant.app` 或 DMG 包
 
 ## 项目结构
 
@@ -79,6 +123,21 @@ assistant/
 ├── build.rs             # 构建脚本
 └── package.json         # Node.js 配置
 ```
+
+## 跨平台支持
+
+✅ **完全支持 Windows、macOS 和 Linux**
+
+本项目使用 Tauri 框架开发，原生支持三大主流操作系统：
+- 🪟 **Windows 10/11** - 需要 Visual Studio Build Tools
+- 🍎 **macOS 10.13+** - 需要 Xcode Command Line Tools
+- 🐧 **Linux** - 需要 webkit2gtk 等依赖
+
+所有功能在所有平台上都能正常工作，包括：
+- 系统通知
+- 窗口管理
+- 文件系统访问
+- 原生对话框
 
 ## 使用说明
 
