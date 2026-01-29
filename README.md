@@ -129,15 +129,38 @@ assistant/
 ✅ **完全支持 Windows、macOS 和 Linux**
 
 本项目使用 Tauri 框架开发，原生支持三大主流操作系统：
-- 🪟 **Windows 10/11** - 需要 Visual Studio Build Tools
-- 🍎 **macOS 10.13+** - 需要 Xcode Command Line Tools
-- 🐧 **Linux** - 需要 webkit2gtk 等依赖
+- 🪟 **Windows 10/11** - 需要 Visual Studio Build Tools（开发时）
+- 🍎 **macOS 10.13+** - 需要 Xcode Command Line Tools（开发时）
+- 🐧 **Linux** - 需要 webkit2gtk 等依赖（开发时）
 
 所有功能在所有平台上都能正常工作，包括：
 - 系统通知
 - 窗口管理
 - 文件系统访问
 - 原生对话框
+
+## 运行已编译的程序（assistant.exe）
+
+如果你已经获得了编译好的 `assistant.exe` 文件，**不需要安装 Rust、Node.js 或 Visual Studio**。
+
+### Windows 运行前置要求
+
+运行 `assistant.exe` 只需要：
+
+1. **Microsoft Edge WebView2 Runtime**（必需）
+   - Windows 10/11 通常已自带
+   - 如果程序无法启动或出现白屏，请下载安装：
+     - 下载地址：https://developer.microsoft.com/microsoft-edge/webview2/
+     - 选择 "Evergreen Runtime" 版本
+
+2. **Visual C++ Redistributable**（可能需要）
+   - 如果提示缺少 DLL 文件（如 `VCRUNTIME140.dll`），请安装：
+     - 下载地址：https://aka.ms/vs/17/release/vc_redist.x64.exe
+     - 或搜索 "Microsoft Visual C++ Redistributable 2015-2022"
+
+### 运行方式
+
+直接双击 `assistant.exe` 即可运行，无需任何额外配置。
 
 ## 使用说明
 
