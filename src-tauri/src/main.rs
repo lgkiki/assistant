@@ -4,7 +4,7 @@
 use serde::{Deserialize, Serialize};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
-use tauri::{Manager, State};
+use tauri::{Manager, State, Emitter};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct PomodoroState {
@@ -12,6 +12,7 @@ struct PomodoroState {
     is_paused: bool,
     remaining_seconds: u64,
     total_seconds: u64,
+    #[serde(skip)]
     start_time: Option<Instant>,
 }
 
@@ -125,6 +126,8 @@ fn main() {
     let pomodoro_state: PomodoroStateMutex = Arc::new(Mutex::new(PomodoroState::default()));
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_notification::init())
+        .plugin(tauri_plugin_dialog::init())
         .manage(pomodoro_state)
         .invoke_handler(tauri::generate_handler![
             get_state,
@@ -135,7 +138,7 @@ fn main() {
         ])
         .setup(|app| {
             let app_handle = app.handle().clone();
-            let state = app.state::<PomodoroStateMutex>();
+            let state = app.state::<PomodoroStateMutex>().inner().clone();
 
             // 启动一个后台任务来检查计时器状态
             tauri::async_runtime::spawn(async move {
@@ -161,20 +164,10 @@ fn main() {
                     };
 
                     if should_notify {
-                        // 发送通知
-                        #[cfg(desktop)]
-                        {
-                            use tauri::api::notification::Notification;
-                            if let Err(e) = Notification::new(&app_handle)
-                                .title("番茄钟")
-                                .body("时间到了！该休息一下了。")
-                                .show() {
-                                eprintln!("通知发送失败: {}", e);
-                            }
-                        }
-
-                        // 发送事件到前端
-                        let _ = app_handle.emit_all("timer-finished", ());
+                        // 发送通知（Tauri 2.x 使用插件）
+                        // 通过前端发送通知，因为 Rust 端的通知 API 需要通过前端调用
+                        // 发送事件到前端，让前端处理通知
+                        let _ = app_handle.emit("timer-finished", ());
                     }
                 }
             });

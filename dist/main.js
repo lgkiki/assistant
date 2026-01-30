@@ -97,17 +97,21 @@ async function handlePreset(minutes) {
 }
 
 // 处理计时器完成
-function handleTimerFinished() {
+async function handleTimerFinished() {
     stopUpdateLoop();
     updateButtonStates(false, false);
     updateStatus('finished', '时间到！');
 
-    // 显示提醒对话框
+    // 显示提醒对话框（Tauri 2.x 兼容）
     if (window.__TAURI__) {
-        message('时间到了！该休息一下了。', {
-            title: '番茄钟提醒',
-            kind: 'info'
-        });
+        try {
+            message('时间到了！该休息一下了。', {
+                title: '番茄钟提醒',
+                kind: 'info'
+            });
+        } catch (error) {
+            console.error('对话框显示失败:', error);
+        }
     }
 
     // 播放提示音（如果浏览器支持）
